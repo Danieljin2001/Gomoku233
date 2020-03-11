@@ -8,38 +8,43 @@ public class MakeButtons {
 	Button button;
 	DropShadow shadow = new DropShadow();
 	//this method determines how the menu button looks
-	public void playerButtons(String name, int x, int y, int width, int height ) {
+	public Button playerButtons(String name, int y ) {
 		this.button = new Button(name);
 		
-		button.setLayoutX(x);
+		button.setLayoutX(25);
 		button.setLayoutY(y);
-		button.setPrefWidth(width);
-		button.setPrefHeight(height);
+		button.setPrefWidth(200);
+		button.setPrefHeight(100);
         button.setStyle(" -fx-background-radius: 20;" //curved edges for the background
         		+ "-fx-border-radius: 20;" //curved edges for the border
         		+ "-fx-font-size: 20;"
         		+ " -fx-border-color: #000000;"
         		+ " -fx-border-width: 2;"
         		+ " -fx-background-color: #ffffff;"
-        		+ " -fx-text-fill: #000000"
+        		+ " -fx-text-fill: #000000;"
         		+ "-fx-background-insets: 0, 0, 1, 2;");
+        makeShadow();
+        return button;
 	}
 	
-	public void menuButtons(String name, int x, int y, int width, int height ) {
+	public Button menuButtons(String name, int y ) {
 		this.button = new Button(name);
 		
-		button.setLayoutX(x);
+		button.setLayoutX(75);
 		button.setLayoutY(y);
-		button.setPrefWidth(width);
-		button.setPrefHeight(height);
+		button.setPrefWidth(200);
+		button.setPrefHeight(83);
         button.setStyle(" -fx-background-radius: 20;" //curved edges for the background
         		+ "-fx-border-radius: 20;" //curved edges for the border
         		+ "-fx-font-size: 20;"
         		+ " -fx-border-color: #000000;"
         		+ " -fx-border-width: 2;"
         		+ " -fx-background-color: #ffffff;"
-        		+ " -fx-text-fill: #000000"
+        		+ " -fx-text-fill: #000000;"
         		+ "-fx-background-insets: 0, 0, 1, 2;");
+        makeShadow();
+        
+		return button;
 	}
 	
 	
