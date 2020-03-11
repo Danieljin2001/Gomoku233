@@ -1,23 +1,22 @@
 
 public class AI{
+	//go is either 1 or 2 (1 represent "black" , 2 represent "White"
+	
 	private int go;  
 	private int [][]chessBoard;
-	
+	//chessBoard is a TWO dimensional array that record chessBoard information.
 	public AI(int g,int [][]currentPosition)
 	{   this.chessBoard=currentPosition;
 		this.go=g;
 	}
 
 
-	public void setChessBoard(int [][]currentPosition)
-	{this.chessBoard=currentPosition;
-		}
-	
+	//This method return the integer which represent the AI player is White or Black.
 	public int getGo()
 	{return go;}
 
 
-	
+	//This method check if AI can play chess at (x,y).
 	public boolean canPlay(int x,int y)
 	{
 		if(chessBoard[x][y]==0)
@@ -25,7 +24,7 @@ public class AI{
 		return false;
 	}
 	
-	
+	//this method play chess on this position : (x,y);
 	public void play(int x,int y)
 	{
 		chessBoard[x][y]=getGo();
@@ -35,9 +34,9 @@ public class AI{
 	
 	
 	
-	
-	
-	public int[] playChess()
+	//This method iterates through every position on the chessBoard;
+	//It calculate the evaluateMark of every position and return the position (an integer array have two value: x, y) that have the highest score;
+	int[] playChess()
 	{   int x=0,y=0;
 		int evaluateMark=0;
 		int []result=new int[2];
@@ -58,12 +57,13 @@ public class AI{
 	result[0]=x;
 	result[1]=y;
 	return result;
-	
-	
-	
-	
 	}
 	
+	
+	//This static method have two argument:
+	//The first one is a shorter String.
+	//the second one is a longer String.
+	//It checks and returns the times of the short string appears in the long string (to calculate the evaluateMark);
 	public static int count(String subS,String supS)
 	{  int num=0;
 		for(int i=0;i<supS.length()-subS.length()+1;i++)
@@ -79,11 +79,19 @@ public class AI{
 		return num;
 	}
 	
+	
+	
+	
+	
+	//This method  receive a position (x,y) on the chessBoard
+	//It return the evaluateMark of this position.
+	//A high evaluateMark indicates that AI play chess at this position is valuable.   
 	public int evaluate(int x,int y)
 	{   int evaluateMark=0;
 		String[] winGroup;
 		int go=getGo();
-
+    //Different piece array have different mark.
+	// We ranked them according to the probability of winning the game;
 	    String[] winGroup1={"11111","12222","22221","22122","21222","22212","11110","01111","11011","10111","11101","022120","021220","12220","02221","011100","001110","011010","010110","002120","021200","002210","012200","001100","001010","010100","000100","001000"};
 
 	    
