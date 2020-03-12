@@ -266,7 +266,7 @@ public class JavaFX_board2 extends Application {
 	
 	public static void main(String args[]) {
 		
-		JavaFX_board a = new JavaFX_board();
+		JavaFX_board2 a = new JavaFX_board2();
 		launch();
 	}
 }
