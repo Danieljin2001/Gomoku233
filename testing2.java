@@ -1,7 +1,4 @@
 package Start;
-import AI.AI;
-import AI.GGame;
-import AllClass.JavaFX_board;
 import AllClass.JavaFX_board2;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
