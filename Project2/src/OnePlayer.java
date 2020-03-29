@@ -39,9 +39,10 @@ public class OnePlayer extends Application {
 	Button quit;
 	Button reset;
 	Button goback;
+	
 	ArrayList<Integer> move;
-	boolean won;
-	int movePlace = 0;
+	boolean won = false;
+	
 	EventHandler<ActionEvent> click;
 	
 	
@@ -183,7 +184,7 @@ public boolean checkDiagonal(int x, int y)
 				chessBoard[i][j]=0;
 		AI ai=new AI(2,chessBoard);
 		step = 0;
-		won = false;
+		
 		term = 1;
 		window = new Group();
 		scene = new Scene(window, 900, 600,Color.BURLYWOOD);
@@ -200,14 +201,14 @@ public boolean checkDiagonal(int x, int y)
 		   	@Override
 		   	public void handle(ActionEvent event)
 		   	{
-		   		if (move.size() > 0 && !won)
+		   		if (move.size() > 1 && !won)
 		   		{
-		   			int a = move.get(movePlace);
-		   			int b = move.get(movePlace + 1);
-		   			board[a][b].setGraphic(getImage());
-		   			board[a][b].setOnAction(click);
+		   			int a = move.get(move.size() - 2);
+		   			int b = move.get(move.size() - 1);
 		   			chessBoard[a][b] = 0;
-		   			movePlace += 2;
+		   			move.remove(move.size() - 2);
+		   			move.remove(move.size() - 1);
+		   			board[a][b].setGraphic(getImage());
 		   			nextTerm();
 		   		}
 		   	}
@@ -249,9 +250,9 @@ public boolean checkDiagonal(int x, int y)
 		   			}
 		   		}
 		   		term = 1;
-		   		window.getChildren().remove(text);
+		   		move.clear();
 		   		won = false;
-		   		movePlace = 0;
+		   		window.getChildren().remove(text);
 		   		
 				for(int i=0;i<15;i++)
 					for(int j=0;j<15;j++)	
@@ -344,8 +345,11 @@ public boolean checkDiagonal(int x, int y)
 				   						a.setFitWidth(450/14 + 22);
 				   						a.setFitHeight(450 /14 + 22);
 				   						board[c][d].setGraphic(a);
+				   						
 				   						move.add(c);
 				   						move.add(d);
+
+				   				    	
 				   				    	
 				   				    	if(checkWin(c,d)) {
 				   				    		window.getChildren().add(winText(term));
@@ -369,8 +373,10 @@ public boolean checkDiagonal(int x, int y)
 				   						b.setFitWidth(450/14 + 22);
 				   						b.setFitHeight(450 /14 + 22);
 				   						board[m][n].setGraphic(b);
+				   						
 				   						move.add(m);
 				   						move.add(n);
+				   						
 				   				    	if(checkWin(m,n)){
 					   						window.getChildren().add(winText(term));
 					   						won = true;

@@ -111,7 +111,6 @@ public class TwoPlayer extends Application {
 		   			}
 		   		}
 		   		go = MenuWindow.getGo();
-		   		move.clear();
 		   		window.getChildren().remove(text);
 		   		
 				for(int i=0;i<15;i++)
