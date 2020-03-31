@@ -1,0 +1,9 @@
+  This file will tell you how to get demo3 running. In the repository named Danieljin2001, go to the master branch, then 
+click the folder DemoThree. Inside you will see some folders, then click the src folder. Inside the src folder you will see some 
+picture, and you do need these pictures for the demo to run. Inside the folder click AllClass, and you will have access to all the files that is needed 
+for demo3. The files that are needed for demo3 are MakeButtons.java, AI.java, MenuWindow.java, OnePlayer.java, and TwoPlayer.java.
+The rest is not necessary for demo3. Player.java is used for the next demo. WinConditionFile contains all the checkwin functions 
+from OnePlayer.java and TwoPlayer.java. TestWinFile.java is a JUnit test file that test the functions in WinConditionFile.
+
+  When you run the code make sure you have all the image from src folder and put the in the same directory as the files. Also make sure all
+the files are in the same directory when running. Run the MenuButton.java to run the full program.
