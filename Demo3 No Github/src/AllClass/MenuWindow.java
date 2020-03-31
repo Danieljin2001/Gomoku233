@@ -16,7 +16,7 @@ import javafx.stage.StageStyle;
 import AllClass.OnePlayer;
 public class MenuWindow  extends Application {
 		//go indicates whether the piece is black(1) or white(2)
-		private static int go = 0;
+		private static int go = 1;
 	
 		   
 		public static void main(String[] args){

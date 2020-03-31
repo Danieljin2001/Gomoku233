@@ -25,9 +25,8 @@ public class TwoPlayer extends Application {
 	Button[][] board;
 	Group window;
 	final private int row = 15;
-	int go;
+	int go = 1;
 	private int[][] chessBoard;
-	private int step;
 	public static Scene scene;
 	Button help;
 	Button quit;
@@ -54,12 +53,13 @@ public class TwoPlayer extends Application {
 		for(int i=0;i<15;i++)
 			for(int j=0;j<15;j++)	
 				chessBoard[i][j]=0;
-		step = 0;
+		
 		
 		//goback button
 		MakeButtons undo1 = new MakeButtons();
 		goback = undo1.boardButtons("UNDO",330);
 		window.getChildren().add(goback);
+	
 		
 		goback.setOnAction(new EventHandler<ActionEvent>()
 		{
@@ -74,6 +74,7 @@ public class TwoPlayer extends Application {
 		   			move.remove(move.size() - 2);
 		   			move.remove(move.size() - 1);
 		   			board[a][b].setGraphic(getImage());
+		   			System.out.println(go);
 		   			nextTerm();
 		   		}
 		   	}
@@ -207,7 +208,8 @@ public class TwoPlayer extends Application {
 				   						move.add(c);
 				   						move.add(d);
 				   						
-				   						if(checkWin(c,d)) {
+				   						//System.out.println(go);
+				   						if(checkWin(c,d,go)) {
 				   				    		window.getChildren().add(winText(go));
 				   				    		for (int q = 0; q < row; q++)
 				   					   		{
@@ -232,7 +234,9 @@ public class TwoPlayer extends Application {
 				   						board[c][d].setGraphic(a);
 				   						move.add(c);
 				   						move.add(d);
-				   						if(checkWin(c,d)) {
+				   						
+				   						//System.out.println(go);
+				   						if(checkWin(c,d,go)) {
 				   				    		window.getChildren().add(winText(go));
 				   				    		for (int q = 0; q < row; q++)
 				   					   		{
@@ -241,9 +245,10 @@ public class TwoPlayer extends Application {
 				   					   				}
 				   					   			
 				   					   			}
-				   				    		}				   				    		
-				   				    	}
+				   				    		}	
 				   						nextTerm();
+				   				    	}
+				   						
 				   					}
 				   					break;
 				   				}
@@ -309,96 +314,106 @@ public class TwoPlayer extends Application {
 	
 	public void play(int x,int y)
 	{
-		chessBoard[x][y]=step++%2+1;
+		chessBoard[x][y]= go;
 	}
  
- public boolean checkWin(int x,int y)
+ public boolean checkWin(int x,int y, int go)
 	{   	
-		if(checkDiagonal(x,y) || checkRow(x,y) || checkCol(x,y)) 
+		if(checkDiagonal(x,y, go) || checkRow(x,y,go) || checkCol(x,y,go)) 
 			return true;
 		return false;
 
 	}
 
 
-public boolean checkRow(int x, int y) {
-	int counter = 0;
-	for (int i = x + 1; i < 15; i++)
-	{
-		if (chessBoard[i][y] ==chessBoard[x][y])
-			counter++;
-			else break;
+ public boolean checkRow(int x, int y, int piece) {
+		int counter = 0;
+		//System.out.println(chessBoard[x][y]);
+		for (int i = y + 1; i < 15; i++)
+		{
+			if (chessBoard[x][i] == piece)
+			{
+				counter++;
+			}
+			else
+			{
+				break;
+			}
+			
+		}
+		
+		for (int i = y; i >= 0; i--) {
+			if (chessBoard[x][i] == piece)
+				counter++;
+	     else break;
+		}
+		//System.out.println(counter);
+	 if(counter>=5)
+		return true;
+	 
+	 return false;
+		
 	}
-	
-	for (int i = x; i >= 0; i--) {
-		if (chessBoard[i][y] ==chessBoard[x][y])
-			counter++;
-     else break;
-	}
- if(counter>=5)
-	return true;
- return false;
-	
-}
 
-public boolean checkCol(int x, int y) 
-{
-	int counter = 0;//
-	for (int j = y + 1; j < 15; j++)
+	public boolean checkCol(int x, int y, int piece) 
 	{
-		if (chessBoard[x][j] ==chessBoard[x][y])
-			counter++;
-			else break;
+		int counter = 0;//
+		for (int j = y + 1; j < 15; j++)
+		{
+			if (chessBoard[j][y] == piece)
+				counter++;
+				else break;
+		}
+		
+		for (int j = y; j >= 0; j--) {
+			if (chessBoard[j][y] == piece)
+				counter++;
+	     else break;
+		}
+	 if(counter>=5)
+		return true;
+	 return false;
+		
 	}
-	
-	for (int j = x; j >= 0; j--) {
-		if (chessBoard[x][j] ==chessBoard[x][y])
-			counter++;
-     else break;
-	}
- if(counter>=5)
-	return true;
- return false;
-	
-}
-public boolean checkDiagonal(int x, int y)
+public boolean checkDiagonal(int x, int y, int piece)
 {
 		int counter = 0;
 		for (int i = x + 1,j =y+1; i < 15 && j < 15;i++,j++)
 		{
-			if (chessBoard[i][j] ==chessBoard[x][y])
+			if (chessBoard[i][j] == piece)
 				counter++;
 				else break;
 		}
 		
 		for (int i = x,j =y; i >=0 && j >=0;i--,j--) {
-			if (chessBoard[i][j] ==chessBoard[x][y])
+			if (chessBoard[i][j] == piece)
 				counter++;
-            else break;
+         else break;
 		}
-        if(counter>=5)
+     if(counter>=5)
 		return true;
-        
-        
-        counter = 0;
+     
+     
+     counter = 0;
 		for (int i = x + 1,j =y-1; i < 15 && j>0;i++,j--)
 		{
-			if (chessBoard[i][j] ==chessBoard[x][y])
+			if (chessBoard[i][j] == piece)
 				counter++;
 				else break;
 		}
 		
 		for (int i = x,j =y; i >=0 && j <15;i--,j++) 
 		{
-			if (chessBoard[i][j] ==chessBoard[x][y])
+			if (chessBoard[i][j] == piece)
 				counter++;
-            else break;
+         else break;
 		}
-        
+     
 		 if(counter>=5)
-		return true;
-        return false;	
+		return true; 
+     return false;	
 }
+
 
 public Text winText(int term) {
 	text = new Text();
