@@ -1,4 +1,5 @@
 package AllClass;
+
 /*
 This is the latest version of the AI file.
 It uses a minimax algorithm and an Alpha-Beta algorithm.
