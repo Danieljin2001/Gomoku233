@@ -1,4 +1,6 @@
 package AllClass;
+
+
 import java.awt.*;
 
 import java.awt.event.ActionListener;
@@ -6,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import javafx.event.ActionEvent;
-
 
 public class GGame  extends JFrame{
 
