@@ -1,11 +1,17 @@
-
-
+package AllClass;
+/*
+This is the latest version of the AI file.
+It uses a minimax algorithm and an Alpha-Beta algorithm.
+Because of the large amount of calculations, it does not respond quickly.
+The search tree depth can be set by changing the difficulty variable in the AI file.
+A simple game file to test AI performance is GGgame
+ */
 public class AIhard {
 
 	//go is either 1 or 2 (1 represent "black" , 2 represent "White"
 	
 
-	private int difficulty=1;
+	private int difficulty=0;
 	private int go;  
 	private int [][]chessBoard;
 	
