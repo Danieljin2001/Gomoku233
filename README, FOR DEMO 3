@@ -6,7 +6,7 @@ The rest is not necessary for demo3. Player.java is used for the next demo. WinC
 from OnePlayer.java and TwoPlayer.java. TestWinFile.java is a JUnit test file that test the functions in WinConditionFile.
 
   When you run the code make sure you have all the image from src folder and put the in the same directory as the files. Also make sure all
-the files are in the same directory when running. Run the MenuButton.java to run the full program.
+the files are in the same directory when running. Run the MenuWindow.java to run the full program.
 
 More info about the program in Plan Proposal, and the video about demo3.
 
