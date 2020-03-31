@@ -1,3 +1,4 @@
+package src;
 
 import java.awt.*;
 
@@ -12,8 +13,12 @@ public class GGame  extends JFrame{
 	 private int[][] chessBoard;
      private JButton [][]jb;
      private int step;
-     private AI ai;
-     
+	 public static void main(String[] args)
+	 {
+			
+			GGame game=new GGame();
+			game.setVisible(true); 
+	 }
 	 public GGame()
 	 { 
 		 
@@ -30,7 +35,7 @@ public class GGame  extends JFrame{
 			for(int i=0;i<15;i++)
 				for(int j=0;j<15;j++)	
 					chessBoard[i][j]=0;
-			AI ai=new AI(2,chessBoard);
+			AIhard ai=new AIhard(2,chessBoard);
 			
 			class buttonActionListener implements ActionListener
 		    {
@@ -80,12 +85,7 @@ public class GGame  extends JFrame{
 		 
 		 
 	 }
-	 public static void main(String[] args)
-	 {
-			
-			GGame game=new GGame();
-			game.setVisible(true); 
-	 }
+
 		public boolean canPlay(int x,int y)
 		{
 			if(chessBoard[x][y]==0)
