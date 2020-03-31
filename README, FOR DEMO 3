@@ -5,6 +5,8 @@ for demo3. The files that are needed for demo3 are MakeButtons.java, AI.java, Me
 The rest is not necessary for demo3. Player.java is used for the next demo. WinConditionFile contains all the checkwin functions 
 from OnePlayer.java and TwoPlayer.java. TestWinFile.java is a JUnit test file that test the functions in WinConditionFile.
 
+  The AIhard file is the AI for the next demo, it is more difficult than the current AI.
+
   When you run the code make sure you have all the image from src folder and put the in the same directory as the files. Also make sure all
 the files are in the same directory when running. Run the MenuWindow.java to run the full program.
 
