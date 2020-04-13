@@ -148,13 +148,32 @@ public class AIhard {
 		{
 			if(canPlay(i,j))
 			{
-				play(i,j);
+				if(i<13&&i>1&&j<13&&j>1)
+				{
+					if(chessBoard[i-2][j-2]+chessBoard[i+2][j+2]+chessBoard[i-2][j+2]+chessBoard[i+2][j-2]+chessBoard[i-2][j]+chessBoard[i+2][j]+chessBoard[i][j-2]+chessBoard[i][j+2]+chessBoard[i-1][j-1]+chessBoard[i+1][j+1]+chessBoard[i-1][j+1]+chessBoard[i+1][j-1]+chessBoard[i-1][j]+chessBoard[i+1][j]+chessBoard[i][j-1]+chessBoard[i][j+1]>=1)
+				{
+					play(i,j);
 				int mark=maxMin(difficulty,-1000000000,1000000000,chessBoard,turn(getGo()));
 				if(evaluateMark<=mark)
-				{       evaluateMark=mark;
-						x=i;y=j;
+				{       
+					{evaluateMark=mark;
+						x=i;y=j;}
+				
 				}
 				chessBoard[i][j]=0;
+				}}
+					else
+					{
+						play(i,j);
+					int mark=maxMin(difficulty,-1000000000,1000000000,chessBoard,turn(getGo()));
+					if(evaluateMark<=mark)
+					{       
+						{evaluateMark=mark;
+							x=i;y=j;}
+					
+					}
+					chessBoard[i][j]=0;
+					}
 			}
 		}
 	result[0]=x;
@@ -208,7 +227,9 @@ public class AIhard {
 	//
 	public int[][] gen(int [][]board,int go)
 	{ArrayList<int[]> position=new ArrayList<int[]>();
-	
+
+					
+					
 		for(int i=1;i<board.length-1;i++)
 		for(int j=1;j<board[0].length-1;j++)
 		{
@@ -223,12 +244,20 @@ public class AIhard {
 
 			position.add(a);
 		}
+		
+		
+		
+		
 		}
-		int len=100;
-		if(position.size()<=100)
-		{
-			len=position.size();
+		if(position.size()==0)
+		{int []a=new int[3];
+			a[0]=7;
+			a[1]=7;
+			a[2]=evalPointMark(7,7, go);
+			position.add(a);
 		}
+		int len=position.size();
+
 		
 		int[][] p=new int [len][];
 		for(int i=0;i<len;i++)
@@ -263,7 +292,14 @@ public class AIhard {
 					}			
 				}	
 		}
-
+		int length=10;
+		if(p.length<10)
+			length=p.length;
+		int[][] result =new int[length][];
+		for(int i=0;i<length;i++)
+		{
+			result[i]=p[i];
+		}
 		return p;
 		
 	}
