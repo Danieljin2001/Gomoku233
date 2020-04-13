@@ -55,41 +55,7 @@ public class AIhard {
 		else
 			return 1;
 	}
-	public int evalPoint(String S,int go)
-	{   int mark=0;
-		int enemy=turn(go);
-		int a=count(S,go);
-		int b=count(S,enemy);
-		
-		if(b==0)
-		{
-			if(a==1)
-			mark =7;
-			if(a==2)
-			mark =35;
-			if(a==3)
-			mark =800;
-			if(a==4)
-			mark =15000;
-			if(a==5)
-			mark =800000;
-		}
-		
 
-		else if(a==0)
-		{if(b==1)
-			mark =15;
-		if(b==2)
-			mark =400;	
-		if(b==3)
-			mark =1800;	
-		if(b==4)
-			mark =100000;	
-		}
-
-	
-		return mark;
-	}
 	
 	public double eval(String s,int go)
 	{    
@@ -271,7 +237,7 @@ public class AIhard {
 		for(int i=0;i<p.length-1;i++)
 			for(int j=0;j<p.length-i-1;j++)
 			{
-				if(p[j][2]<p[j+1][2])
+				if(p[j][2]>p[j+1][2])
 				{
 					temp=p[j];
 					p[j]=p[j+1];
@@ -282,7 +248,7 @@ public class AIhard {
 		else
 		{
 			for(int i=0;i<p.length-1;i++)
-				for(int j=0;j<p.length-i-1;j++)
+				for(int j=0;j>p.length-i-1;j++)
 				{
 					if(p[j][2]>p[j+1][2])
 					{
@@ -292,8 +258,8 @@ public class AIhard {
 					}			
 				}	
 		}
-		int length=10;
-		if(p.length<10)
+		int length=20;
+		if(p.length<20)
 			length=p.length;
 		int[][] result =new int[length][];
 		for(int i=0;i<length;i++)
@@ -388,8 +354,8 @@ String []s={"","","",""};
 	    
 	    for(String sup:s)
 	    {
-	    	for(int i=0;i<sup.length()-4;i++)
-	    		evaluateMark+=evalPoint(sup.substring(i,i+5),go);
+	    	for(int i=0;i<sup.length()-5;i++)
+	    		evaluateMark+=eval(sup.substring(i,i+6),go);
 	    }
 		return evaluateMark;
 	}
