@@ -21,21 +21,21 @@ import javafx.stage.Stage;
 
 public class TwoPlayer extends Application {
 	
-	final String rule = "Player can win a game by having 5 or more vertically, horizontally or diagonally. Now enejoy the game. :-)";
-	Button[][] board;
-	Group window;
+	final private String rule = "Player can win a game by having 5 or more vertically, horizontally or diagonally. Now enejoy the game. :-)";
+	private Button[][] board;
+	private Group window;
 	final private int row = 15;
-	int go = 1;
-	private int[][] chessBoard;
-	public static Scene scene;
-	Button help;
-	Button quit;
-	Button reset;
-	Button goback;
-	Text text;
-
-	ArrayList<Integer> move;
-	boolean won = false;
+	private int go = 1;
+	//private int[][] chessBoard;
+	private static Scene scene;
+	private Button help;
+	private Button quit;
+	private Button reset;
+	private Button goback;
+	private Text text;
+	//private int term;
+	//ArrayList<Integer> move;
+	private boolean won = false;
 	
 	EventHandler<ActionEvent> click;
 	
@@ -44,15 +44,17 @@ public class TwoPlayer extends Application {
 		
 		
 		//initialize everything
-		move = new ArrayList<Integer>();
+		//term = 1;
+		//move = new ArrayList<Integer>();
+		GameLogic logic = new GameLogic();
 		go = MenuWindow.getGo();
 		window = new Group();
 		scene = new Scene(window, 900, 600,Color.BURLYWOOD);
-		Button[][] board = new Button[row][row];
-		chessBoard=new int[15][15];
-		for(int i=0;i<15;i++)
-			for(int j=0;j<15;j++)	
-				chessBoard[i][j]=0;
+		board = new Button[row][row];
+		//chessBoard=new int[15][15];
+		//for(int i=0;i<15;i++)
+			//for(int j=0;j<15;j++)	
+				//chessBoard[i][j]=0;
 		
 		
 		//goback button
@@ -66,14 +68,10 @@ public class TwoPlayer extends Application {
 		   	@Override
 		   	public void handle(ActionEvent event)
 		   	{
-		   		if (move.size() > 1 && !won)
+		   		if (logic.checkSize() > 1 && !won)
 		   		{
-		   			int a = move.get(move.size() - 2);
-		   			int b = move.get(move.size() - 1);
-		   			chessBoard[a][b] = 0;
-		   			move.remove(move.size() - 2);
-		   			move.remove(move.size() - 1);
-		   			board[a][b].setGraphic(getImage());
+		   			int[] List = logic.goBack_One();
+		   			board[List[0]][List[1]].setGraphic(getImage());
 		   			System.out.println(go);
 		   			nextTerm();
 		   		}
@@ -115,13 +113,14 @@ public class TwoPlayer extends Application {
 		   			}
 		   		}
 		   		go = MenuWindow.getGo();
-		   		move.clear();
-		   		move.clear();
+		   		logic.clearBoard();
+		   		//move.clear();
+		   		//move.clear();
 		   		window.getChildren().remove(text);
 		   		
-				for(int i=0;i<15;i++)
-					for(int j=0;j<15;j++)	
-						chessBoard[i][j]=0;
+				//for(int i=0;i<15;i++)
+					//for(int j=0;j<15;j++)	
+						//chessBoard[i][j]=0;
 		   	}
 		   });
 		
@@ -194,22 +193,25 @@ public class TwoPlayer extends Application {
 				   			for (int d = 0; d < row; d++)
 				   			{
 				   				if (board[c][d] == event.getSource())
-				   				{
+				   				{System.out.println(c);
 				   					if (go == 1)
 				   					{
 				   						//place down the black piece
-				   						if(canPlay(c,d))
-				   				    	{	play(c,d);
+				   						logic.play(c,d, go);
+				   				    	
 				   				    	Image black = new Image ("gomoku_black.png", 90, 90, true, true);
 				   						ImageView a = new ImageView(black);
 				   						a.setFitWidth(450/14 + 22);
 				   						a.setFitHeight(450 /14 + 22);
 				   						board[c][d].setGraphic(a);
-				   						move.add(c);
-				   						move.add(d);
+				   						
+				   						board[c][d].setOnAction(null);
+				   						//move.add(c);
+				   						//move.add(d);
 				   						
 				   						//System.out.println(go);
-				   						if(checkWin(c,d,go)) {
+				   						if(logic.checkWin(c,d,go)) {
+				   							goback.setOnAction(null);
 				   				    		window.getChildren().add(winText(go));
 				   				    		for (int q = 0; q < row; q++)
 				   					   		{
@@ -221,22 +223,24 @@ public class TwoPlayer extends Application {
 				   				    		}
 				   						nextTerm();
 				   				    	}
-				   					}
+				   					
 				   					else
 				   					{
 				   					//place down the white piece piece
-				   						if(canPlay(c,d))
-				   				    	{	play(c,d);
+				   						
+				   				    	logic.play(c,d,go);
 				   				    	Image black = new Image ("gomoku white.png", 90, 90, true, true);
 				   						ImageView a = new ImageView(black);
 				   						a.setFitWidth(450/14 + 22);
 				   						a.setFitHeight(450 /14 + 22);
 				   						board[c][d].setGraphic(a);
-				   						move.add(c);
-				   						move.add(d);
+				   						board[c][d].setOnAction(null);
+				   						//move.add(c);
+				   						//move.add(d);
 				   						
 				   						//System.out.println(go);
-				   						if(checkWin(c,d,go)) {
+				   						if(logic.checkWin(c,d,go)) {
+				   							goback.setOnAction(null);
 				   				    		window.getChildren().add(winText(go));
 				   				    		for (int q = 0; q < row; q++)
 				   					   		{
@@ -248,23 +252,34 @@ public class TwoPlayer extends Application {
 				   				    		}	
 				   						nextTerm();
 				   				    	}
-				   						
-				   					}
 				   					break;
+				   						}
+				   					}
+				   					//break;
 				   				}
 				   			}
-				   		}
+				   		};
+				   		board[a][b].setOnAction(click);
+				   		window.getChildren().add(board[a][b]);
 				    }
-				};
-				   board[a][b].setOnAction(click);
+						
+				}
+				   
 				   	
 			
 				//add it to the parent node
-				window.getChildren().add(board[a][b]);
+				
 			}
-		}
-	}
+		
 	
+	public Scene getScene()
+	{
+		
+		
+		Group window = new Group(this.window);
+		return new Scene(window, 900, 600,Color.BURLYWOOD);
+		
+	}
 	public void nextTerm()
 	{
 		if (go == 1)
@@ -303,6 +318,7 @@ public class TwoPlayer extends Application {
 		TwoPlayer a = new TwoPlayer();
 		launch();
 	}
+	/*
 	public boolean canPlay(int x,int y)
 	{
 		if(chessBoard[x][y]==0)
@@ -413,7 +429,7 @@ public boolean checkDiagonal(int x, int y, int piece)
 		return true; 
      return false;	
 }
-
+*/
 
 public Text winText(int term) {
 	text = new Text();

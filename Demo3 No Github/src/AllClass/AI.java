@@ -5,13 +5,13 @@ public class AI{
 	//go is either 1 or 2 (1 represent "black" , 2 represent "White"
 	//chessBoard is a TWO dimensional array that record chessBoard information.
 	private int go;  
-	int [][]chessBoard;
+	private int [][]chessBoard;
 	public AI(int g,int [][]currentPosition)
 	{   this.chessBoard=currentPosition;
 		this.go=g;
 	}
 
-
+	
 	//This method return the integer which represent the AI player is White or Black.
 	public int getGo()
 	{return go;}

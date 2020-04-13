@@ -3,12 +3,12 @@ package AllClass;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-
+import AllClass.GameLogic;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -18,35 +18,46 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class OnePlayer extends Application {
 	
-	final String rule = "Player can win a game by having 5 or more vertically, horizontally or diagonally. Now enejoy the game. :-)";
-	Button[][] board;
-	Group window;
+	final private String rule = "Player can win a game by having 5 or more vertically, horizontally or diagonally. Now enejoy the game. :-)";
+	private Button[][] board;
+	private Group window;
 	final private int row = 15;
 	
-	int term;
+	private int term;
 	
-	public static Scene scene;
+	private static Scene scene;
 	
-	int[][] chessBoard;
-    private AI ai;
+	//private int[][] chessBoard;
+    private AIhard ai;
     private int step;
-    Text text;
+    private Text text;
 	
-	Button help;
-	Button quit;
-	Button reset;
-	Button goback;
+    private Button help;
+    private Button quit;
+    private Button reset;
+    private Button goback;
 	
-	ArrayList<Integer> move;
+	//ArrayList<Integer> move;
 	boolean won = false;
 	
 	EventHandler<ActionEvent> click;
 	
+	public Scene getScene()
+	{
+		Group window = new Group(this.window);
+		return new Scene(window, 900, 600,Color.BURLYWOOD);
+	}
 	
-	
+	/* 
+	public int[][] getBoard()
+	{
+		return chessBoard.clone();
+	}
+	*/
 	
 	public Text winText(int term) {
 		text = new Text();
@@ -63,7 +74,7 @@ public class OnePlayer extends Application {
 		
 		return this.text;
 	}
-	   
+/*	   
 	public boolean canPlay(int x,int y)
 	{
 		if(chessBoard[x][y]==0)
@@ -78,9 +89,9 @@ public class OnePlayer extends Application {
 		chessBoard[x][y]=step++%2+1;
 	}
  
- public boolean checkWin(int x,int y)
+ public boolean checkWin(int x,int y, int go)
 	{   	
-		if(checkDiagonal(x,y, 1) || checkRow(x,y, 1) || checkCol(x,y, 1) || checkDiagonal(x,y, 2) || checkRow(x,y,2) || checkCol(x,y, 2)) 
+		if(checkDiagonal(x,y, go) || checkRow(x,y, go) || checkCol(x,y, go))
 			return true;
 		return false;
 
@@ -175,7 +186,7 @@ public boolean checkDiagonal(int x, int y, int piece)
         return false;	
 }
 
- 
+ */
 	
 	
 	
@@ -185,13 +196,10 @@ public boolean checkDiagonal(int x, int y, int piece)
 		
 		
 		//initialize everything
-		move = new ArrayList<Integer>();
+		//move = new ArrayList<Integer>();
 		
-		chessBoard=new int[15][15];
-		for(int i=0;i<15;i++)
-			for(int j=0;j<15;j++)	
-				chessBoard[i][j]=0;
-		AI ai=new AI(2,chessBoard);
+		GameLogic logic = new GameLogic();
+		AIhard ai=new AIhard(2);
 		step = 0;
 		
 		term = 1;
@@ -210,8 +218,9 @@ public boolean checkDiagonal(int x, int y, int piece)
 		   	@Override
 		   	public void handle(ActionEvent event)
 		   	{
-		   		if (move.size() > 1 && !won)
+		   		if (logic.checkSize() > 1 && !won)
 		   		{
+		   			/*
 		   			int a = move.get(move.size() - 2);
 		   			int b = move.get(move.size() - 1);
 		   			int c = move.get(move.size() - 4);
@@ -222,11 +231,16 @@ public boolean checkDiagonal(int x, int y, int piece)
 		   			move.remove(move.size() - 3);
 		   			move.remove(move.size() - 2); 
 		   			move.remove(move.size() - 1);
-
-		   			ai.chessBoard[a][b] = 0;
-		   			ai.chessBoard[c][d] = 0;
-		   			board[a][b].setGraphic(getImage());
-		   			board[c][d].setGraphic(getImage());
+		   			*/
+		   			int[] move = logic.goBack_Two(ai);
+		   			//ai.back(a, b);
+		   			//ai.back(c, d);
+		   			//ai.chessBoard[a][b] = 0;
+		   			//ai.chessBoard[c][d] = 0;
+		   			board[move[0]][move[1]].setGraphic(getImage());
+		   			board[move[0]][move[1]].setOnAction(click);
+		   			board[move[2]][move[3]].setGraphic(getImage());
+		   			board[move[2]][move[3]].setOnAction(click);
 		   			//nextTerm();
 		   		}
 		   	}
@@ -253,6 +267,7 @@ public boolean checkDiagonal(int x, int y, int piece)
 		MakeButtons reset1 = new MakeButtons();
 		reset = reset1.boardButtons("RESET",220);
 		window.getChildren().add(reset);
+		ai.reset();
 		reset.setOnAction(new EventHandler<ActionEvent>()
 		   {
 		   	@Override
@@ -268,20 +283,21 @@ public boolean checkDiagonal(int x, int y, int piece)
 		   			}
 		   		}
 		   		term = 1;
-		   		move.clear();
+		   		logic.clearBoard();
 		   		won = false;
+		   		goback.setDisable(false);
 		   		window.getChildren().remove(text);
 		   		
-				for(int i=0;i<15;i++)
-					for(int j=0;j<15;j++)
-					{
-						chessBoard[i][j]=0;
-						ai.chessBoard[i][j] = 0;
-					}
+				//for(int i=0;i<15;i++)
+				//	for(int j=0;j<15;j++)
+					//{
+				//		chessBoard[i][j]=0;
+						
+				//	}
 						
 						
-		   	}
-		   });
+		  // 	}
+		   	}});
 		
 		
 		
@@ -360,23 +376,28 @@ public boolean checkDiagonal(int x, int y, int piece)
 				   			{
 				   				if (board[c][d] == event.getSource())
 				   					{
-				   						if(canPlay(c,d))
-				   				    	{	play(c,d);
-				   				    	term = 1;
+				   						System.out.println("    "+term);
+				   						//if(canPlay(c,d))
+				   				    	//{	
+				   						logic.play(c,d, term,ai);
+				   						//ai.play1(c, d);
+				   						
+				   				    	//term = 1;
 				   				    	Image black = new Image ("gomoku_black.png", 90, 90, true, true);
 				   						ImageView a = new ImageView(black);
 				   						a.setFitWidth(450/14 + 22);
 				   						a.setFitHeight(450 /14 + 22);
 				   						board[c][d].setGraphic(a);
-				   						
-				   						move.add(c);
-				   						move.add(d);
-				   						System.out.println(move);
+				   						//logic.addMove(c, d);
+				   						//move.add(c);
+				   						//move.add(d);
+				   						//System.out.println(move);
+				   						board[c][d].setOnAction(null);
 				   				    	
-				   				    	
-				   				    	if(checkWin(c,d)) {
+				   				    	if(logic.checkWin(c,d,term)) {
 				   				    		window.getChildren().add(winText(term));
 				   				    		won = true;
+				   				    		goback.setDisable(true);
 				   				    		for (int q = 0; q < row; q++)
 				   					   		{
 				   					   			for (int r = 0; r < row; r++) {
@@ -385,24 +406,28 @@ public boolean checkDiagonal(int x, int y, int piece)
 				   					   			
 				   					   		}
 				   				    	}
-				   				    		
-				   				    	
+				   				    	nextTerm();
+				   				    	System.out.println("    "+term);
 				   				    	int [] AI = ai.playChess();
 				   				    	int m= AI[0],n= AI[1];
-				   				    	play(m,n);
-				   				    	term = 2;
+				   				    	System.out.println(m);
+				   				    	System.out.println(n);
+				   				    	logic.play(m,n,term,ai);
+				   				    	//ai.play(m, n,term);
+				   				    	//term = 2;
 				   				    	Image white = new Image ("gomoku white.png", 90, 90, true, true);
 				   						ImageView b = new ImageView(white);
 				   						b.setFitWidth(450/14 + 22);
 				   						b.setFitHeight(450 /14 + 22);
 				   						board[m][n].setGraphic(b);
-				   						
-				   						move.add(m);
-				   						move.add(n);
-				   						System.out.println(move);
-				   				    	if(checkWin(m,n)){
+				   						board[m][n].setOnAction(null);
+				   						//move.add(m);
+				   						//move.add(n);
+				   						//System.out.println(move);
+				   				    	if(logic.checkWin(m,n,term)){
 					   						window.getChildren().add(winText(term));
 					   						won = true;
+					   						goback.setDisable(true);
 					   						for (int q = 0; q < row; q++)
 				   					   		{
 				   					   			for (int r = 0; r < row; r++) {
@@ -410,7 +435,8 @@ public boolean checkDiagonal(int x, int y, int piece)
 				   					   				}
 				   					   			}
 				   				    		}
-				   				    	}
+				   				    	nextTerm();
+				   				    	
 				   					}
 				   				}
 				   			}
@@ -453,6 +479,7 @@ public boolean checkDiagonal(int x, int y, int piece)
 		
 
 		primaryStage.setTitle("Gomoku");
+		primaryStage.initStyle(StageStyle.UNDECORATED);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

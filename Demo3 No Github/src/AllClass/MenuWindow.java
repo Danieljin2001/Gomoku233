@@ -61,7 +61,7 @@ public class MenuWindow  extends Application {
 			   	public void handle(ActionEvent event)
 			   	{
 			   		OnePlayer a = new OnePlayer();
-			   		primaryStage.setScene(OnePlayer.scene);
+			   		primaryStage.setScene(a.getScene());
 			   	}
 			   });
 			
@@ -107,7 +107,7 @@ public class MenuWindow  extends Application {
 					   	{
 					   		setGo(1);
 					   		TwoPlayer a = new TwoPlayer();
-							primaryStage.setScene(TwoPlayer.scene);
+							primaryStage.setScene(a.getScene());
 					   		primaryStage.show();
 					   		secondaryStage.hide();
 
@@ -127,7 +127,7 @@ public class MenuWindow  extends Application {
 					   	{
 					   		setGo(2);
 					   		TwoPlayer a = new TwoPlayer();
-					   		primaryStage.setScene(TwoPlayer.scene);
+					   		primaryStage.setScene(a.getScene());
 					   		primaryStage.show();
 					   		secondaryStage.hide();
 
