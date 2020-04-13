@@ -1,4 +1,8 @@
 package AllClass;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /*This is the latest version of the AI file.
 It uses a minimax algorithm and an Alpha-belta algorithm.
 Because of the large amount of calculations, it does not respond quickly.
@@ -9,8 +13,12 @@ public class AIhard {
 
 	//go is either 1 or 2 (1 represent "black" , 2 represent "White"
 	
+	private static final String[] winGroup1={"11111","011110","011100","001110","011010","010110","211110","011112","11011","10111","11101","001100","001010","010100","000100","001000","12220","02221","022120","021220","22122","21222","22212","002210","012200","002120","021200","001200","002100"};
+	
+	private static final String[] winGroup2= {"22222","022220","022200","002220","022020","020220","122220","022221","22022","20222","22202","002200","002020","020200","000200","002000","21110","01112","011210","012110","11211","12111","11121","001120","021100","001210","012100","002100","001200"};
 
-	private int difficulty=0;
+	private static final double[] grade= {2000000,43200,1200,1200,1200,1200,1200,1200,1200,1200,1200,120,120,120,20,20,5000,5000,5000,5000,5000,5000,5000,240,240,240,240,40,40};
+	private int difficulty=1;
 	private int go;  
 	private int [][]chessBoard;
 	
@@ -27,20 +35,7 @@ public class AIhard {
 
 	//This method check if AI can play chess at (x,y).
 	public boolean canPlay(int a,int b)
-	{   /*int [][]ext=new int[19][19];
-	
-	    for(int i=0;i<19;i++)
-		for(int j=0;j<19;j++)
-		{ext[i][j]=0;	
-		}
-	    
-	    for(int i=0;i<15;i++)
-	    	for(int j=0;j<15;j++)
-			{ext[i+2][j+2]=chessBoard[i][j];	
-			}	
-	    	int x=a+2,y=a+2;
-	     int sum=ext[x-1][y-1]+ext[x-2][y-2]+ext[x][y]+ext[x+1][y+1]+ext[x+2][y+2]+ext[x+1][y-1]+ext[x+2][y-2]+ext[x-1][y+1]+ext[x-2][y+2]+ext[x-1][y]+ext[x-2][y]+ext[x+1][y]+ext[x+2][y]+ext[x][y+2]+ext[x][y+1]+ext[x][y-2]+ext[x][y-2];
-		*/
+	{   
 		if(chessBoard[a][b]==0)
 	    return true;
 
@@ -60,8 +55,7 @@ public class AIhard {
 		else
 			return 1;
 	}
-	
-	public int eval(String S,int go)
+	public int evalPoint(String S,int go)
 	{   int mark=0;
 		int enemy=turn(go);
 		int a=count(S,go);
@@ -78,24 +72,56 @@ public class AIhard {
 			if(a==4)
 			mark =15000;
 			if(a==5)
-			mark =1000000;
+			mark =800000;
 		}
 		
 
-		else if(a>=1)
+		else if(a==0)
 		{if(b==1)
-			mark =20;
+			mark =15;
 		if(b==2)
-			mark =500;	
+			mark =400;	
 		if(b==3)
-			mark =4000;	
+			mark =1800;	
 		if(b==4)
-			mark =300000;	
+			mark =100000;	
 		}
 
 	
 		return mark;
 	}
+	
+	public double eval(String s,int go)
+	{    
+	double mark=0;
+	String [] winGroupA=winGroup1;
+	String [] winGroupB=winGroup2;
+	if(go==2)
+	{
+		winGroupA=winGroup2;
+	    winGroupB=winGroup1;
+	}
+	int i=0;
+		for(String t:winGroupA)
+		{
+			if(s.indexOf(t)!=-1)
+				mark=grade[i];
+				i++;
+		}
+	
+		i=0;
+		for(String t:winGroupB)
+		{
+			if(s.indexOf(t)!=-1)
+				mark=-grade[i];
+			i++;
+		}
+		
+		
+		return mark;
+		}
+
+	
 	public static int count(String S,int go)
 	{int num=0;
 		for(int i=0;i<S.length();i++)
@@ -135,61 +161,203 @@ public class AIhard {
 	result[1]=y;
 	return result;
 	}
-
-	public int[][] copy(int [][]a)
-	{int [][]b=new int[15][15];
-		for(int i=0;i<chessBoard.length;i++)
-			for(int j=0;j<chessBoard[0].length;j++)
-			{
-				b[i][j]=a[i][j];
-			}
-		return b;
-	}
 	
 	public int maxMin(int level, int alpha,int beta,int [][]board,int go)
 	{
 	    if(level == 0)  return evaluate(board);
+	    int[][]p=gen(board,go);
+	    int i=0,j=0;
 	 if(go==getGo())
 	 {
-	    for(int i=0;i<board.length;i++)
-			for(int j=0;j<board[0].length;j++)
+	    for(int[] a:p)
 			{
-				if(canPlay(i,j))
-				{
-					
-					board[i][j]=go;
+	    	i=a[0];
+			j=a[1];			
+				board[i][j]=go;
 	            int newval = maxMin(level-1,alpha,beta,board,turn(go));
 	            board[i][j]=0;
 	            if (newval > alpha)
-	            {
 	                alpha = newval;
-	            }
-	            if(alpha > beta)
+	            
+	            if(alpha >= beta)
 	                return alpha;
 	            }
-	            }
+
 	    return alpha;
 	 }
-	    else{
-		    for(int i=0;i<board.length;i++)
-				for(int j=0;j<board[0].length;j++)
-				{
-					if(board[i][j]==0)
-					{
-						int [][]b=copy(board);
-						b[i][j]=go;
-	            int newval = maxMin(level-1,alpha,beta,b,turn(go));
-	            if (newval < beta)
-	            {
+	    else
+	    {
+	    	for(int[] a:p)
+			{ 
+	    	i=a[0];
+			j=a[1];			
+            board[i][j]=go;
+			int newval = maxMin(level-1,alpha,beta,board,turn(go));
+			    board[i][j]=0;	            
+			    if (newval < beta)
 	                beta = newval;
-	                              }
-	        if(alpha > beta)
+
+	        if(alpha >= beta)
 	            return beta;
 	                 }
-	            }
+
 	    return beta;
-	            }
+	    }
 	}
+
+	//
+	public int[][] gen(int [][]board,int go)
+	{ArrayList<int[]> position=new ArrayList<int[]>();
+	
+		for(int i=1;i<board.length-1;i++)
+		for(int j=1;j<board[0].length-1;j++)
+		{
+		if(board[i][j]+board[i-1][j-1]+board[i+1][j+1]+board[i-1][j+1]+board[i+1][j-1]+board[i-1][j]+board[i+1][j]+board[i][j-1]+board[i][j+1]>=1&&board[i][j]==0)
+		{
+			int []a=new int[3];
+			a[0]=i;
+			a[1]=j;
+
+			a[2]=evalPointMark(i,j, go);
+
+
+			position.add(a);
+		}
+		}
+		int len=100;
+		if(position.size()<=100)
+		{
+			len=position.size();
+		}
+		
+		int[][] p=new int [len][];
+		for(int i=0;i<len;i++)
+		{
+			p[i]=position.get(i);
+		}
+		int []temp=new int[3];
+
+		if(go==getGo())
+		{
+		for(int i=0;i<p.length-1;i++)
+			for(int j=0;j<p.length-i-1;j++)
+			{
+				if(p[j][2]<p[j+1][2])
+				{
+					temp=p[j];
+					p[j]=p[j+1];
+					p[j+1]=temp;
+				}			
+			}
+		}
+		else
+		{
+			for(int i=0;i<p.length-1;i++)
+				for(int j=0;j<p.length-i-1;j++)
+				{
+					if(p[j][2]>p[j+1][2])
+					{
+						temp=p[j];
+						p[j]=p[j+1];
+						p[j+1]=temp;
+					}			
+				}	
+		}
+
+		return p;
+		
+	}
+	public int evalPointMark(int x,int y,int go)
+	{   int evaluateMark=0;
+
+String []s={"","","",""};
+	    int start=x-4,end=x+4; 
+	    if(x<4)
+	    	start=0;
+	    if(x>10)
+	    	end=14;
+	    for(int i=start;i<=end;i++) 
+	    {
+	    	s[0]=s[0]+chessBoard[i][y];
+	    }
+
+	    
+	    
+	    
+	    start=y-4;end=y+4;  
+	    if(y>10)
+	    	end=14;
+	    
+	    if(y<4)
+	    	start=0;
+	    
+	    for(int j=start;j<=end;j++) 
+	    {
+	    	s[1]=s[1]+chessBoard[x][j];
+	    }
+
+	    
+	    int startx=x-4;
+	    int endx=x+4;
+	    int starty=y-4;
+	    int endy=y+4;
+	    
+	    if(x<4||y<4)
+	    	if(x<y)
+	    	{
+	    	startx=0;
+	        starty=y-x;
+	    	}
+	    	else
+	    	{
+		    startx=x-y;
+		    starty=0;	
+	    	}
+	    if(x>10)
+	    	endx=14;    
+	    if(y>10)
+	    	endy=14;
+	    for(int i=startx,j=starty;i<=endx&&j<=endy;i++,j++) 
+	    {
+	    	s[2]=s[2]+chessBoard[i][j];
+	    }
+	    
+	    startx=x-4;
+	    endx=x+4;
+	    starty=y+4;
+	    endy=y-4;
+	    
+	    if(x<4||y>10)
+	    	if(x<14-y)
+	    	{
+	    	startx=0;
+	        starty=y+x;
+	    	}
+	    	else
+	    	{
+		    startx=x-14+y;
+		    starty=14;	
+	    	}
+	    if(x>10)
+	    	endx=14;    
+	    if(y<4)
+	    	endy=0;
+
+	    for(int i=startx,j=starty;i<=endx&&j>=endy;i++,j--) 
+	    {
+	    	s[3]=s[3]+chessBoard[i][j];
+	    }
+
+	    
+	    
+	    for(String sup:s)
+	    {
+	    	for(int i=0;i<sup.length()-4;i++)
+	    		evaluateMark+=evalPoint(sup.substring(i,i+5),go);
+	    }
+		return evaluateMark;
+	}
+	
 	
 	
 	
@@ -200,42 +368,42 @@ public int evaluate(int [][]board)
 	String s="";
 	
 for(int i=0;i<board.length;i++)
-for(int j=0;j<board[0].length-4;j++)	
+for(int j=0;j<board[0].length-5;j++)	
 {s="";
-	for(int k=0;k<5;k++)
+	for(int k=0;k<6;k++)
 	s+=board[i][j+k];
 	mark+=eval(s,getGo());
 	
 }
 
-for(int i=0;i<board.length-4;i++)
+for(int i=0;i<board.length-5;i++)
 for(int j=0;j<board[0].length;j++)	
 {s="";
-	for(int k=0;k<5;k++)
+	for(int k=0;k<6;k++)
 	s+=board[i+k][j];
 	mark+=eval(s,getGo());
-
+	
 }
 
 
 
-for(int i=0;i<board.length-4;i++)
-for(int j=0;j<board[0].length-4;j++)	
+for(int i=0;i<board.length-5;i++)
+for(int j=0;j<board[0].length-5;j++)	
 {s="";
-	for(int k=0;k<5;k++)
+	for(int k=0;k<6;k++)
 	s+=board[i+k][j+k];
 	mark+=eval(s,getGo());
-
+	
 }
 
 
-for(int i=0;i<board.length-4;i++)
-for(int j=0;j<board[0].length-4;j++)	
+for(int i=0;i<board.length-5;i++)
+for(int j=0;j<board[0].length-5;j++)	
 {s="";
-	for(int k=0;k<5;k++)
-	s+=board[i+k][j+4-k];
+	for(int k=0;k<6;k++)
+	s+=board[i+k][j+5-k];
 	mark+=eval(s,getGo());
-
+	
 }
 
 
