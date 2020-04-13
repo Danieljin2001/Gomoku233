@@ -258,8 +258,9 @@ public class AIhard {
 					}			
 				}	
 		}
-		int length=20;
-		if(p.length<20)
+
+		int length=10;
+		if(p.length<10)
 			length=p.length;
 		int[][] result =new int[length][];
 		for(int i=0;i<length;i++)
