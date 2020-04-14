@@ -3,31 +3,36 @@ package AllClass;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/*This is the latest version of the AI file.
+
+/**
+  * @ClassName: AIhard
+  * @Description: This is the latest version of the AI file.
 It uses a minimax algorithm and an Alpha-belta algorithm.
 Because of the large amount of calculations, it does not respond quickly.
 The search tree depth can be set by changing the difficulty variable in the AI file.
-A simple game file to test AI performance is GGgame
-*/
+  * @author Comsys-zyf
+  * @date 2020.4.10
+  *
+  */
 public class AIhard {
 
 	
 	
-	private static final String[] winGroup1={"11111","011110","011100","001110","011010","010110","211110","011112","11011","10111","11101","001100","001010","010100","000100","001000","12220","02221","022120","021220","22122","21222","22212","002210","012200","002120","021200","001200","002100"};
+	private static final String[] winGroup1={"11111","011110","011100","001110","011010","010110","211110","011112","11011","10111","11101","001100","001010","010100","000100","001000","12220","02221","022120","021220","22122","21222","22212","002210","012200","002120","021200","001200","002100","122221"};
 	
-	private static final String[] winGroup2= {"22222","022220","022200","002220","022020","020220","122220","022221","22022","20222","22202","002200","002020","020200","000200","002000","21110","01112","011210","012110","11211","12111","11121","001120","021100","001210","012100","002100","001200"};
+	private static final String[] winGroup2= {"22222","022220","022200","002220","022020","020220","122220","022221","22022","20222","22202","002200","002020","020200","000200","002000","21110","01112","011210","012110","11211","12111","11121","001120","021100","001210","012100","002100","001200","211112"};
 
-	private static final double[] grade= {2000000,83200,1200,1200,1200,1200,1200,1200,1200,1200,1200,120,120,120,20,20,5000,5000,5000,5000,5000,5000,5000,240,240,240,240,40,40};
+	private static final double[] grade= {2000000,200000,1200,1200,1200,1200,1200,1200,1200,1200,1200,120,120,120,20,20,1200,1200,1200,1200,5000,5000,5000,240,240,240,240,40,40,1500};
 	/**
-	  * @Fields difficulty : TODO（Represents the depth of the search tree for the maximum and minimum algorithm.The greater the value, the smarter the AI, but the speed of AI make decision will decrease.）
+	  * @Fields difficulty : Represents the depth of the search tree for the maximum and minimum algorithm.The greater the value, the smarter the AI, but the speed of AI make decision will decrease.
 	  */
 	private int difficulty=1;
 	/**
-	  * @Fields go : TODO（Represents the color of chess pieces controlled by AI. go is either 1 or 2 (1 represent "black" , 2 represent "White"）
+	  * @Fields go : Represents the color of chess pieces controlled by AI. go is either 1 or 2 (1 represent "black" , 2 represent "White"）.
 	  */
 	private int go;  
 	/**
-	  * @Fields chessBoard : TODO（A two-dimensional array storing the position information of the chess pieces of both players）
+	  * @Fields chessBoard : A two-dimensional array storing the position information of the chess pieces of both players.
 	  */
 	private int [][]chessBoard;
 	
@@ -46,7 +51,7 @@ public class AIhard {
 	
 	
 	/**
-	  * reset(Reset the entire board to start a new game)
+	  * reset :Reset the entire board to start a new game
 	  * TODO(Traverse every position of the chessBoard array,Traverse each position of the chessboard array and assign them zero)
 	  *
 	  * @Title: reset
@@ -81,7 +86,7 @@ public class AIhard {
 	
 
 	/**
-	  * getGo(Returns the number representing the color of the chess piece controlled by the AI)
+	  * getGo :Returns the number representing the color of the chess piece controlled by the AI
 	  * TODO(1 for black chess 2 for white chess)
 	  *
 	  * @Title: getGo
@@ -98,7 +103,7 @@ public class AIhard {
 
 	//This method check if AI can play chess at (x,y).
 	/**
-	  * canPlay(This method check if AI can play chess at a specific location.)
+	  * canPlay: This method check if AI can play chess at a specific location.
 	  *
 	  * @Title: canPlay
 	  * @Description: TODO
@@ -118,9 +123,9 @@ public class AIhard {
 		return false;
 	}
 	
-	//this method play chess on this position : (x,y);
+
 	/**
-	  * play(这里用一句话描述这个方法的作用)
+	  * play(this method play chess on this position : (x,y);)
 	  *
 	  * @Title: play
 	  * @Description: TODO
@@ -432,7 +437,7 @@ for(int j=0;j<board[0].length-5;j++)
 	}
 	
 	/**
-	  * maxMin(Method of using recursion to realize maximum and minimum algorithm.)
+	  * maxMin: Method of using recursion to realize maximum and minimum algorithm.
 	  * TODO(In order to improve the speed of AI decision-making, the alpha beta pruning method is also used.)
 	  *
 	  * @Title: maxMin
@@ -493,9 +498,9 @@ for(int j=0;j<board[0].length-5;j++)
 
 	//
 	/**
-	  * gen(Select a number of valuable positions on the board, store them in an array and return instead of traversing the whole board.)
+	  * gen: Select a number of valuable positions on the board, store them in an array and return instead of traversing the whole board.)
 	  * TODO(This method also uses the evaluatePointMark method to evaluate and sort the position information stored in the array
-This is conducive to the fast operation of the pruning algorithm and can improve the speed of AI decision-making,)
+This is conducive to the fast operation of the pruning algorithm and can improve the speed of AI decision-making.
 	  *
 	  * @Title: gen
 	  * @Description: TODO
@@ -505,7 +510,6 @@ This is conducive to the fast operation of the pruning algorithm and can improve
 	  * @return int[][]    
 	  * @throws
 	  */
-	
 	
 	public int[][] gen(int [][]board,int go)
 	{ArrayList<int[]> position=new ArrayList<int[]>();
