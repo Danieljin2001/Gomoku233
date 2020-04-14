@@ -21,7 +21,7 @@ public class AIhard {
 	/**
 	  * @Fields difficulty : TODO（Represents the depth of the search tree for the maximum and minimum algorithm.The greater the value, the smarter the AI, but the speed of AI make decision will decrease.）
 	  */
-	private int difficulty=2;
+	private int difficulty=1;
 	/**
 	  * @Fields go : TODO（Represents the color of chess pieces controlled by AI. go is either 1 or 2 (1 represent "black" , 2 represent "White"）
 	  */
