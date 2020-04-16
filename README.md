@@ -7,7 +7,7 @@ Here are all the files that are needed for running the game: "OnePlayer.java, Tw
 # Contribution
 This game is made by 5 members from Group 15. This demo is similar to demo3, but the code is optimized and a lot of comment were added.
 
-# Credit for the picture we used:
+# Credit for the pictures we used:
 Gomoku board: https://pngtree.com/freepng/puzzle-game-gomoku-go-illustration-piece_3899715.html
 
 Black chess: https://cn.depositphotos.com/262669268/stock-photo-illustration-game-gomoku-chess-renju.html
