@@ -15,14 +15,24 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import AllClass.OnePlayer;
 public class MenuWindow  extends Application {
-		//go indicates whether the piece is black(1) or white(2)
-		private static int go = 0;
+
+		/**
+		  * @Fields go : TODO（go indicates whether the piece is black(1) or white(2)）
+		  */
+		private static int go = 1;
 	
 		   
 		public static void main(String[] args){
 		
 			launch(args);
 		}
+		/**
+		  * <p>Title: start</p>
+		  * <p>Description: Rewrite the start method of the Aplication class.</p>
+		  * @param primaryStage
+		  * @see javafx.application.Application#start(javafx.stage.Stage)
+		  */
+		
 		@Override
 		public void start(Stage primaryStage) {
 			Canvas canvas = new Canvas(720,500);
@@ -61,7 +71,7 @@ public class MenuWindow  extends Application {
 			   	public void handle(ActionEvent event)
 			   	{
 			   		OnePlayer a = new OnePlayer();
-			   		primaryStage.setScene(OnePlayer.scene);
+			   		primaryStage.setScene(a.getScene());
 			   	}
 			   });
 			
@@ -73,7 +83,8 @@ public class MenuWindow  extends Application {
 			//create middle button
 			//this button will open up another window showing options for either black or white or go back
 			Button twoPlayer = mid.menuButtons("TWO PLAYER",208);
-			twoPlayer.setOnAction(new EventHandler<ActionEvent>()
+			twoPlayer.setOnAction(
+			new EventHandler<ActionEvent>()
 			   {
 			   	@Override
 			   	public void handle(ActionEvent event)
@@ -107,7 +118,7 @@ public class MenuWindow  extends Application {
 					   	{
 					   		setGo(1);
 					   		TwoPlayer a = new TwoPlayer();
-							primaryStage.setScene(TwoPlayer.scene);
+							primaryStage.setScene(a.getScene());
 					   		primaryStage.show();
 					   		secondaryStage.hide();
 
@@ -127,7 +138,7 @@ public class MenuWindow  extends Application {
 					   	{
 					   		setGo(2);
 					   		TwoPlayer a = new TwoPlayer();
-					   		primaryStage.setScene(TwoPlayer.scene);
+					   		primaryStage.setScene(a.getScene());
 					   		primaryStage.show();
 					   		secondaryStage.hide();
 
@@ -185,6 +196,17 @@ public class MenuWindow  extends Application {
 		
 		
 		
+		/**
+		  * gomoku：  Generate a text box with content “gomoku”。
+		  *
+		  * @Title: gomoku
+		  * @Description: TODO
+		  * @param @return    
+		  * @return Text    
+		  * @throws
+		  */
+		
+		
 		public Text gomoku() {
 			Text text = new Text();
 			text.setX(360);
@@ -197,10 +219,30 @@ public class MenuWindow  extends Application {
 		}
 		
 		
+		/**
+		  * setGo：  Set the color of the first move piece
+		  *
+		  * @Title: setGo
+		  * @Description: TODO
+		  * @param @param piece    
+		  * @return 
+		  * @throws
+		  */
+		
+		
 		public static void setGo(int piece) {
 			go = piece;
 		}
-		
+		/**
+		  * getGo :Returns the number representing the color of the first move piece
+		  * TODO(1 for black chess 2 for white chess)
+		  *
+		  * @Title: getGo
+		  * @Description: TODO
+		  * @param  none
+		  * @return int  return an integer value
+		  * @throws
+		  */
 		public static int getGo() {
 			return go;
 		}

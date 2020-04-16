@@ -38,18 +38,18 @@ public class WinConditionFile {
  
 
  
- public boolean checkWin(int x,int y)
+	public boolean checkWin(int x,int y, int go)
 	{   	
-		if(checkDiagonal(x,y, 1) || checkRow(x,y, 1) || checkCol(x,y, 1) || checkDiagonal(x,y, 2) || checkRow(x,y,2) || checkCol(x,y, 2)) 
+		if(checkDiagonal(x,y, go) || checkRow(x,y,go) || checkCol(x,y,go)) 
 			return true;
 		return false;
 
 	}
- 
+
 
  public boolean checkRow(int x, int y, int piece) {
 		int counter = 0;
-		System.out.println(chessBoard[x][y]);
+		//System.out.println(chessBoard[x][y]);
 		for (int i = y + 1; i < 15; i++)
 		{
 			if (chessBoard[x][i] == piece)
@@ -68,7 +68,7 @@ public class WinConditionFile {
 				counter++;
 	     else break;
 		}
-		System.out.println(counter);
+		//System.out.println(counter);
 	 if(counter>=5)
 		return true;
 	 
@@ -109,13 +109,13 @@ public boolean checkDiagonal(int x, int y, int piece)
 		for (int i = x,j =y; i >=0 && j >=0;i--,j--) {
 			if (chessBoard[i][j] == piece)
 				counter++;
-            else break;
+         else break;
 		}
-        if(counter>=5)
+     if(counter>=5)
 		return true;
-        
-        
-        counter = 0;
+     
+     
+     counter = 0;
 		for (int i = x + 1,j =y-1; i < 15 && j>0;i++,j--)
 		{
 			if (chessBoard[i][j] == piece)
@@ -127,12 +127,12 @@ public boolean checkDiagonal(int x, int y, int piece)
 		{
 			if (chessBoard[i][j] == piece)
 				counter++;
-            else break;
+         else break;
 		}
-        
+     
 		 if(counter>=5)
-		return true;
-        return false;	
+		return true; 
+     return false;	
 }
 
 }

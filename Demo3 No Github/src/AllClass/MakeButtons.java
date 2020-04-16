@@ -3,13 +3,33 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-//this class determines how the buttons look like and the outputs
+
+/**
+  * @ClassName: MakeButtons
+  * @Description: this class determines how the buttons look like and the outputs
+  * @author Comsys-zyf
+  * @date 
+  *
+  */
 public class MakeButtons extends Button {
 	Button button;
 	DropShadow shadow = new DropShadow();
 	
 	
-	//this method determines how the menu button looks (ONE PLAYER, TWO PLAYER, EXIT, BLACK. WHITE, GO BACK)
+	
+	/**
+	  * menuButtons This method determines how the menu button looks (ONE PLAYER, TWO PLAYER, EXIT, BLACK. WHITE, GO BACK)
+	  *
+	  * @Title: menuButtons
+	  * @Description: TODO
+	  * @param @param name : A string representing the button's name 
+	  * @param @param y
+	  * @param @return    
+	  * @return Button  Returns an instance of the button type.  
+	  * @throws
+	  */
+	
+	
 	public Button menuButtons(String name, int y ) {
 		this.button = new Button(name);
 		
@@ -30,7 +50,19 @@ public class MakeButtons extends Button {
 		return button;
 	}
 	
-	//This method determines how to button in the board game window will look (QUIT, UNDO, RESET, HELP)
+	/**
+	  * boardButtons This method determines how the button in the board game window will look (QUIT, UNDO, RESET, HELP)
+	  *
+	  * @Title: boardButtons
+	  * @Description: TODO
+	  * @param @param name  A string representing the button's name 
+	  * @param @param y
+	  * @param @return    
+	  * @return Button    Returns an instance of the button type.
+	  * @throws
+	  */
+	
+	
 	public Button boardButtons(String name, int y ) {
 		this.button = new Button(name);
 		
@@ -50,8 +82,17 @@ public class MakeButtons extends Button {
         
 		return button;
 	}
+	/**
+	  * makeShadow:  It makes shadows once the mouse enters the button and removes show once it leaves.
+	  *
+	  * @Title: makeShadow
+	  * @Description: TODO
+	  * @param     none
+	  * @return void    none
+	  * @throws
+	  */
 	
-	//this makes shadows once the mouse enters the button and removes show once it leaves
+	
 	public void makeShadow() {
         button.addEventHandler(MouseEvent.MOUSE_ENTERED,
         		new EventHandler<MouseEvent>() {
