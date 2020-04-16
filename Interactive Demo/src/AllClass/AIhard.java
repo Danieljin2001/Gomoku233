@@ -22,7 +22,7 @@ public class AIhard {
 	
 	private static final String[] winGroup2= {"22222","022220","022200","002220","022020","020220","122220","022221","22022","20222","22202","002200","002020","020200","000200","002000","21110","01112","011210","012110","11211","12111","11121","001120","021100","001210","012100","002100","001200","211112"};
 
-	private static final double[] grade= {2000000,200000,1200,1200,1200,1200,1200,1200,1200,1200,1200,120,120,120,20,20,1200,1200,1200,1200,5000,5000,5000,240,240,240,240,40,40,1500};
+	private static final double[] grade= {2000000,100000,10000,10000,10000,10000,10000,10000,10000,10000,10000,500,500,500,20,20,1200,1200,1200,1200,5000,5000,5000,240,240,240,240,40,40,15000};
 	/**
 	  * @Fields difficulty : Represents the depth of the search tree for the maximum and minimum algorithm.The greater the value, the smarter the AI, but the speed of AI make decision will decrease.
 	  */
