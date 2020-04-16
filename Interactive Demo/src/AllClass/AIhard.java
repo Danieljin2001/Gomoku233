@@ -18,11 +18,11 @@ public class AIhard {
 
 	
 	
-	private static final String[] winGroup1={"11111","011110","011100","001110","011010","010110","211110","011112","11011","10111","11101","001100","001010","010100","000100","001000","12220","02221","022120","021220","22122","21222","22212","002210","012200","002120","021200","001200","002100","122221"};
+	private static final String[] winGroup1={"11111","011110","011100","001110","011010","010110","211110","011112","11011","10111","11101","001100","001010","010100","000100","001000","12220","02221","022120","021220","22122","21222","22212","002210","012200","002120","021200","001200","002100","122221","12220"};
 	
-	private static final String[] winGroup2= {"22222","022220","022200","002220","022020","020220","122220","022221","22022","20222","22202","002200","002020","020200","000200","002000","21110","01112","011210","012110","11211","12111","11121","001120","021100","001210","012100","002100","001200","211112"};
+	private static final String[] winGroup2= {"22222","022220","022200","002220","022020","020220","122220","022221","22022","20222","22202","002200","002020","020200","000200","002000","21110","01112","011210","012110","11211","12111","11121","001120","021100","001210","012100","002100","001200","211112","21110"};
 
-	private static final double[] grade= {2000000,100000,10000,10000,10000,10000,10000,10000,10000,10000,10000,500,500,500,20,20,1200,1200,1200,1200,5000,5000,5000,240,240,240,240,40,40,15000};
+	private static final double[] grade= {2000000,100000,10000,10000,10000,10000,10000,10000,10000,10000,10000,500,500,500,20,20,1200,1200,1200,1200,5000,5000,5000,240,240,240,240,40,40,15000,5000};
 	/**
 	  * @Fields difficulty : Represents the depth of the search tree for the maximum and minimum algorithm.The greater the value, the smarter the AI, but the speed of AI make decision will decrease.
 	  */
@@ -405,7 +405,7 @@ for(int j=0;j<board[0].length-5;j++)
 			{
 				if(i<13&&i>1&&j<13&&j>1)
 				{
-					if(chessBoard[i-2][j-2]+chessBoard[i+2][j+2]+chessBoard[i-2][j+2]+chessBoard[i+2][j-2]+chessBoard[i-2][j]+chessBoard[i+2][j]+chessBoard[i][j-2]+chessBoard[i][j+2]+chessBoard[i-1][j-1]+chessBoard[i+1][j+1]+chessBoard[i-1][j+1]+chessBoard[i+1][j-1]+chessBoard[i-1][j]+chessBoard[i+1][j]+chessBoard[i][j-1]+chessBoard[i][j+1]>=1)
+					if(chessBoard[i][j]+chessBoard[i-1][j-1]+chessBoard[i+1][j+1]+chessBoard[i-1][j+1]+chessBoard[i+1][j-1]+chessBoard[i-1][j]+chessBoard[i+1][j]+chessBoard[i][j-1]+chessBoard[i][j+1]>=1&&chessBoard[i][j]==0)
 				{
 					play(i,j,getGo());
 				int mark=maxMin(difficulty,-1000000000,1000000000,chessBoard,turn(getGo()));
